@@ -65,7 +65,7 @@ public class RobotMap {
         drivetrainRobotDrive41.setSensitivity(0.5);
         drivetrainRobotDrive41.setMaxOutput(1.0);
 
-        drivetrainAnalogGyro1 = new AnalogGyro(0);
+        drivetrainAnalogGyro1 = new AnalogGyro(1);
         LiveWindow.addSensor("Drivetrain", "AnalogGyro1", drivetrainAnalogGyro1);
         drivetrainAnalogGyro1.setSensitivity(0.007);
         drivetrainleftEncoder = new Encoder(0, 1, false);

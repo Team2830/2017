@@ -64,18 +64,23 @@ public class Drivetrain extends Subsystem {
     }
     
     public void driveTank(Joystick joystick){
-    	
+    /*
+     * 
 		double rightCalc = joystick.getRawAxis(3)+ Math.copySign((controllerCorrection - controllerCorrection* Math.abs(joystick.getRawAxis(3))),joystick.getRawAxis(3));
 		double leftCalc = joystick.getRawAxis(1)+  Math.copySign(controllerCorrection - controllerCorrection* Math.abs(joystick.getRawAxis(1)),joystick.getRawAxis(1));
 
-		SmartDashboard.putNumber("leftCalc",leftCalc);
+    	SmartDashboard.putNumber("leftCalc",leftCalc);
 		SmartDashboard.putNumber("rightCalc",rightCalc * -1);
-		SmartDashboard.putNumber("left",joystick.getRawAxis(1));
+				if (Math.abs(rightCalc) > .38 || Math.abs(leftCalc) > .38){
+		*/
+		SmartDashboard.putNumber("left",joystick.getRawAxis(1) * -1);
 		SmartDashboard.putNumber("right",joystick.getRawAxis(3) * -1);
-		
-		if (Math.abs(rightCalc) > .38 || Math.abs(leftCalc) > .38){
-			robotDrive41.tankDrive(rightCalc * -1, leftCalc);
-		}
+		SmartDashboard.putNumber("Left Encoder",leftEncoder.getDistance());
+		SmartDashboard.putNumber("Right Encoder",rightEncoder.getDistance());		
+		SmartDashboard.putNumber("Gyro",analogGyro1.getAngle());
+
+			robotDrive41.tankDrive(joystick.getRawAxis(1) * -1, joystick.getRawAxis(3) *-1,true);
+
     }
 }
 
