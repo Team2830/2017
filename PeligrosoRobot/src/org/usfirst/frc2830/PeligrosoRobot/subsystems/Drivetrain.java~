@@ -61,6 +61,9 @@ public class Drivetrain extends Subsystem {
 
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
+        analogGyro1.reset();
+        leftEncoder.reset();
+        rightEncoder.reset();
     }
     
     public void driveTank(Joystick joystick){

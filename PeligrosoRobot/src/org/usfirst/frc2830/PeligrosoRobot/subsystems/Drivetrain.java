@@ -85,5 +85,10 @@ public class Drivetrain extends Subsystem {
 			robotDrive41.tankDrive(joystick.getRawAxis(1) * -1, joystick.getRawAxis(3) *-1,true);
 
     }
+    
+    public void driveForward(double speed){
+    	
+    	robotDrive41.arcadeDrive(speed, 0);
+    }
 }
 
