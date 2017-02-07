@@ -61,9 +61,9 @@ public class Drivetrain extends Subsystem {
 
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
-        analogGyro1.reset();
-        leftEncoder.reset();
-        rightEncoder.reset();
+        getAnalogGyro1().reset();
+        getLeftEncoder().reset();
+        getRightEncoder().reset();
     }
     
     public void driveTank(Joystick joystick){
@@ -78,12 +78,29 @@ public class Drivetrain extends Subsystem {
 		*/
 		SmartDashboard.putNumber("left",joystick.getRawAxis(1) * -1);
 		SmartDashboard.putNumber("right",joystick.getRawAxis(3) * -1);
-		SmartDashboard.putNumber("Left Encoder",leftEncoder.getDistance());
-		SmartDashboard.putNumber("Right Encoder",rightEncoder.getDistance());		
-		SmartDashboard.putNumber("Gyro",analogGyro1.getAngle());
+		SmartDashboard.putNumber("Left Encoder",getLeftEncoder().getDistance());
+		SmartDashboard.putNumber("Right Encoder",getRightEncoder().getDistance());		
+		SmartDashboard.putNumber("Gyro",getAnalogGyro1().getAngle());
 
 			robotDrive41.tankDrive(joystick.getRawAxis(1) * -1, joystick.getRawAxis(3) *-1,true);
 
     }
+    
+    public void driveForward(double speed, double rotation){
+    	
+    	robotDrive41.arcadeDrive(speed, rotation);
+    }
+
+	public Encoder getLeftEncoder() {
+		return leftEncoder;
+	}
+
+	public Encoder getRightEncoder() {
+		return rightEncoder;
+	}
+
+	public AnalogGyro getAnalogGyro1() {
+		return analogGyro1;
+	}
 }
 

@@ -10,6 +10,7 @@
 
 
 package org.usfirst.frc2830.PeligrosoRobot.commands;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc2830.PeligrosoRobot.Robot;
 
@@ -36,23 +37,39 @@ public class AutonomousCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.drivetrain.getLeftEncoder().reset();
+    	Robot.drivetrain.getRightEncoder().reset();
+    	Robot.drivetrain.getAnalogGyro1().reset();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.drivetrain.driveForward(.5,0);
+    	
+    	if(Robot.drivetrain.getAnalogGyro1().getAngle()>1.00){
+    		Robot.drivetrain.driveForward(.5,.5);
+    	}
+    	if(Robot.drivetrain.getAnalogGyro1().getAngle()<-1.00){
+    		Robot.drivetrain.driveForward(.5,-.5);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+    	if(100.00 <= Robot.drivetrain.getLeftEncoder().getDistance() || 100.00 <= Robot.drivetrain.getRightEncoder().getDistance()){
+        	return true;
+        }
+    	return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.drivetrain.driveForward(0,0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.drivetrain.driveForward(0, 0);
     }
 }
