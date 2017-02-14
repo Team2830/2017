@@ -49,7 +49,7 @@ public class Drivetrain extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	static double controllerCorrection = .35;
+	static double controllerCorrection = .15;
 
 
     public void initDefaultCommand() {
@@ -67,22 +67,25 @@ public class Drivetrain extends Subsystem {
     }
     
     public void driveTank(Joystick joystick){
-    /*
-     * 
-		double rightCalc = joystick.getRawAxis(3)+ Math.copySign((controllerCorrection - controllerCorrection* Math.abs(joystick.getRawAxis(3))),joystick.getRawAxis(3));
-		double leftCalc = joystick.getRawAxis(1)+  Math.copySign(controllerCorrection - controllerCorrection* Math.abs(joystick.getRawAxis(1)),joystick.getRawAxis(1));
+     
+		double rightCalc = -1* joystick.getRawAxis(3)+ Math.copySign((controllerCorrection - controllerCorrection* Math.abs(joystick.getRawAxis(3))),joystick.getRawAxis(3));
+		double leftCalc = -1 * joystick.getRawAxis(1)+  Math.copySign(controllerCorrection - controllerCorrection* Math.abs(joystick.getRawAxis(1)),joystick.getRawAxis(1));
 
     	SmartDashboard.putNumber("leftCalc",leftCalc);
 		SmartDashboard.putNumber("rightCalc",rightCalc * -1);
-				if (Math.abs(rightCalc) > .38 || Math.abs(leftCalc) > .38){
-		*/
+				if (Math.abs(rightCalc) > (controllerCorrection+.03) || Math.abs(leftCalc) > (controllerCorrection +.03)){
+		
 		SmartDashboard.putNumber("left",joystick.getRawAxis(1) * -1);
 		SmartDashboard.putNumber("right",joystick.getRawAxis(3) * -1);
 		SmartDashboard.putNumber("Left Encoder",getLeftEncoder().getDistance());
 		SmartDashboard.putNumber("Right Encoder",getRightEncoder().getDistance());		
 		SmartDashboard.putNumber("Gyro",getAnalogGyro1().getAngle());
 
-			robotDrive41.tankDrive(joystick.getRawAxis(1) * -1, joystick.getRawAxis(3) *-1,true);
+		//	robotDrive41.tankDrive(joystick.getRawAxis(1) * -1, joystick.getRawAxis(3) *-1,true);
+		robotDrive41.tankDrive(leftCalc, rightCalc);
+				} else {
+					robotDrive41.tankDrive(0, 0);
+				}
 
     }
     
