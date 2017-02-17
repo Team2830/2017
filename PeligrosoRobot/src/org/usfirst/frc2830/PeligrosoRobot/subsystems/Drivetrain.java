@@ -106,11 +106,12 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void driveSplitArcade(Joystick driverStick) {
 
+		
 
 		// robotDrive41.arcadeDrive(throttle, steering);
 		// Make sure the values are outside if the deadband
-		double steering = deadbanded(driverStick.getRawAxis(3), joystickDeadband);
-		double throttle = deadbanded(driverStick.getRawAxis(1), joystickDeadband);
+		double steering = deadbanded(driverStick.getRawAxis(3) + driverStick.getRawAxis(6), joystickDeadband);
+		double throttle = deadbanded(driverStick.getRawAxis(4), joystickDeadband);
 		double overPower;
 		double angularPower;
 		// 254 uses overPower as part of their quickStopAcelerator calculations,
