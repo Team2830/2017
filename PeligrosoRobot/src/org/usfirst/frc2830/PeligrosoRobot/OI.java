@@ -73,8 +73,8 @@ public class OI {
         // SmartDashboard Buttons
         SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
         SmartDashboard.putData("TankDrive", new TankDrive());
-        SmartDashboard.putData("Turn", new Turn());
-        SmartDashboard.putData("DriveDistance", new DriveDistance());
+        SmartDashboard.putData("Turn", new Turn(10));
+        SmartDashboard.putData("DriveDistance", new DriveDistance(10));
         SmartDashboard.putData("splitArcadeDrive", new splitArcadeDrive());
         SmartDashboard.putData("DriveWinch", new DriveWinch());
         SmartDashboard.putData("LeftAuto", new LeftAuto());
