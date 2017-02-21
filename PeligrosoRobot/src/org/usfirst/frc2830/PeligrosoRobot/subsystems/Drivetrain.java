@@ -76,11 +76,7 @@ public class Drivetrain extends Subsystem {
 		SmartDashboard.putNumber("rightCalc",rightCalc * -1);
 				if (Math.abs(rightCalc) > (controllerCorrection+.03) || Math.abs(leftCalc) > (controllerCorrection +.03)){
 		
-		SmartDashboard.putNumber("left",joystick.getRawAxis(1) * -1);
-		SmartDashboard.putNumber("right",joystick.getRawAxis(3) * -1);
-		SmartDashboard.putNumber("Left Encoder",getLeftEncoder().getDistance());
-		SmartDashboard.putNumber("Right Encoder",getRightEncoder().getDistance());		
-		SmartDashboard.putNumber("Gyro",getAnalogGyro1().getAngle());
+		writeToSmartDashboard(joystick);
 
 		//	robotDrive41.tankDrive(joystick.getRawAxis(1) * -1, joystick.getRawAxis(3) *-1,true);
 		robotDrive41.tankDrive(leftCalc, rightCalc);
@@ -90,6 +86,14 @@ public class Drivetrain extends Subsystem {
 
 				
     }
+
+	private void writeToSmartDashboard(Joystick joystick) {
+		SmartDashboard.putNumber("left",joystick.getRawAxis(1) * -1);
+		SmartDashboard.putNumber("right",joystick.getRawAxis(3) * -1);
+		SmartDashboard.putNumber("Left Encoder",getLeftEncoder().getDistance());
+		SmartDashboard.putNumber("Right Encoder",getRightEncoder().getDistance());		
+		SmartDashboard.putNumber("Gyro",getAnalogGyro1().getAngle());
+	}
 
 	public void driveForward(double speed, double rotation) {
 
@@ -110,15 +114,17 @@ public class Drivetrain extends Subsystem {
 
 		// robotDrive41.arcadeDrive(throttle, steering);
 		// Make sure the values are outside if the deadband
-		double steering = deadbanded((-1*driverStick.getRawAxis(2)) + driverStick.getRawAxis(3), joystickDeadband);
-		double throttle = deadbanded(driverStick.getRawAxis(1), joystickDeadband);
+		double throttle = deadbanded((-1*driverStick.getRawAxis(2)) + driverStick.getRawAxis(3), joystickDeadband);
+		double steering = deadbanded(driverStick.getRawAxis(0), joystickDeadband);
 		double overPower;
 		double angularPower;
 		// 254 uses overPower as part of their quickStopAcelerator calculations,
 		// which we are not using at this point. leaving at 0
 		overPower = 0.0;
 		angularPower = Math.abs(throttle) * steering;
-
+		
+		writeToSmartDashboard(driverStick);
+		
 		double rightPwm = throttle - angularPower;
 		double leftPwm = throttle + angularPower;
 		if (leftPwm > 1.0) {
@@ -136,7 +142,11 @@ public class Drivetrain extends Subsystem {
 		}
 		robotDrive41.tankDrive(leftPwm, rightPwm);
 	}
-	public void driveArcade(double throttle, double steering) {
+	public void driveArcade(Joystick driverStick) {
+		double throttle = deadbanded((-1*driverStick.getRawAxis(2)) + driverStick.getRawAxis(3), joystickDeadband);
+		double steering = deadbanded(-1*driverStick.getRawAxis(0), joystickDeadband);
+		writeToSmartDashboard(driverStick);
+	
 		robotDrive41.arcadeDrive(throttle, steering, true);
 	}
 
