@@ -60,14 +60,15 @@ public class DriveDistance extends Command {
        	SmartDashboard.putNumber("Left Encoder",Robot.drivetrain.getLeftEncoder().getDistance());
        	SmartDashboard.putNumber("Right Encoder",Robot.drivetrain.getRightEncoder().getDistance());
        	SmartDashboard.putNumber("Gyro",Robot.drivetrain.getAnalogGyro1().getAngle());
-
-       	Robot.drivetrain.driveForward(.5,0);
     	
     	if(Robot.drivetrain.getAnalogGyro1().getAngle()>1.00){
-    		Robot.drivetrain.driveForward(.5,.5);
+    		Robot.drivetrain.driveForward(.7,.5);
     	}
-    	if(Robot.drivetrain.getAnalogGyro1().getAngle()<-1.00){
-    		Robot.drivetrain.driveForward(.5,-.5);
+    	else if(Robot.drivetrain.getAnalogGyro1().getAngle()<-1.00){
+    		Robot.drivetrain.driveForward(.7,-.5);
+    	}
+    	else{
+    		Robot.drivetrain.driveForward(.7,0);
     	}
     }
   

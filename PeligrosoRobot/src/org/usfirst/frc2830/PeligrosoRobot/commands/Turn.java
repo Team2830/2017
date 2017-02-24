@@ -66,10 +66,10 @@ public class Turn extends Command {
     		Robot.drivetrain.driveForward(0, 0);
     	}
     	else if(error > 0){
-    		Robot.drivetrain.driveForward(0, -.5);
+    		Robot.drivetrain.driveForward(0, -.7);
     	}
     	else{
-    		Robot.drivetrain.driveForward(0, .5);
+    		Robot.drivetrain.driveForward(0, .7);
     	}
     }
 
