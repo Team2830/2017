@@ -45,6 +45,7 @@ public class RiverseWinch extends Command {
     		Robot.winch.set(-1);
     	}
     }
+    
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
