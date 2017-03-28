@@ -51,8 +51,8 @@ public class Winch extends Subsystem {
     
     public void set(double speed)
     {
-    	speedcontroller1.set(speed);
-    	speedController2.set(speed);
+    	speedcontroller1.set(-speed);
+    	speedController2.set(-speed);
     }
 }
 
