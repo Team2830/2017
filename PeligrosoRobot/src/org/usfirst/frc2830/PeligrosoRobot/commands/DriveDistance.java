@@ -76,7 +76,7 @@ public class DriveDistance extends Command {
     		Robot.drivetrain.driveForward(m_speed,0);
     	}*/
        	double v;
-       	double x = Robot.drivetrain.getLeftEncoder().getDistance();
+       	double x = Robot.drivetrain.getRightEncoder().getDistance();
        	double vMin = .6;
        	double xRamp = Math.min(18,m_distance/2);
        	double xBrake = Math.min(18,m_distance/2);

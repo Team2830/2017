@@ -45,7 +45,7 @@ public Turn (double TurnAngle, double speed){
         requires(Robot.drivetrain);
 }
     public Turn(double TurnAngle) {
-    	this(TurnAngle, .7);
+    	this(TurnAngle, .6);
     }
 
     // Called just before this Command runs the first time
