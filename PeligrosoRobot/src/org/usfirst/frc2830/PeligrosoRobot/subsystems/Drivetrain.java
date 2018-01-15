@@ -10,6 +10,7 @@
 
 package org.usfirst.frc2830.PeligrosoRobot.subsystems;
 
+import org.usfirst.frc2830.PeligrosoRobot.Robot;
 import org.usfirst.frc2830.PeligrosoRobot.RobotMap;
 import org.usfirst.frc2830.PeligrosoRobot.commands.*;
 
@@ -48,6 +49,11 @@ public class Drivetrain extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	static double controllerCorrection = .35;
+	
+	/**
+	 * Deadband is the range of numbers smaller than that we are going to ignore. For example, if the deadband = .02, 
+	 * then if the joystick inputs of < .02 and > -.02 are treated as 0
+	 */
 	static double joystickDeadband = .02;
 
 
@@ -76,7 +82,6 @@ public class Drivetrain extends Subsystem {
 		SmartDashboard.putNumber("rightCalc",rightCalc * -1);
 				if (Math.abs(rightCalc) > (controllerCorrection+.03) || Math.abs(leftCalc) > (controllerCorrection +.03)){
 		
-		writeToSmartDashboard(joystick);
 
 		//	robotDrive41.tankDrive(joystick.getRawAxis(1) * -1, joystick.getRawAxis(3) *-1,true);
 		robotDrive41.tankDrive(leftCalc, rightCalc);
@@ -87,14 +92,18 @@ public class Drivetrain extends Subsystem {
 				
     }
 
-	private void writeToSmartDashboard(Joystick joystick) {
-		SmartDashboard.putNumber("left",joystick.getRawAxis(1) * -1);
-		SmartDashboard.putNumber("right",joystick.getRawAxis(3) * -1);
+	public void writeToSmartDashboard() {
+
 		SmartDashboard.putNumber("Left Encoder",getLeftEncoder().getDistance());
 		SmartDashboard.putNumber("Right Encoder",getRightEncoder().getDistance());		
 		SmartDashboard.putNumber("Gyro",getAnalogGyro1().getAngle());
 	}
 
+	/**
+	 *  This method is used to drive the robot using the arcadeDrive. Parameters are passed to the arcadeDrive method of RobotDrive
+	 * @param speed
+	 * @param rotation
+	 */
 	public void driveForward(double speed, double rotation) {
 
 		robotDrive41.arcadeDrive(speed, rotation);
@@ -123,8 +132,6 @@ public class Drivetrain extends Subsystem {
 		overPower = 0.0;
 		angularPower = Math.abs(throttle) * steering;
 		
-		writeToSmartDashboard(driverStick);
-		
 		double rightPwm = throttle - angularPower;
 		double leftPwm = throttle + angularPower;
 		if (leftPwm > 1.0) {
@@ -145,8 +152,6 @@ public class Drivetrain extends Subsystem {
 	public void driveArcade(Joystick driverStick) {
 		double throttle = deadbanded((-1*driverStick.getRawAxis(2)) + driverStick.getRawAxis(3), joystickDeadband);
 		double steering = deadbanded(-1*driverStick.getRawAxis(0), joystickDeadband);
-		writeToSmartDashboard(driverStick);
-	
 		robotDrive41.arcadeDrive(throttle, steering, true);
 	}
 
@@ -162,6 +167,11 @@ public class Drivetrain extends Subsystem {
 		return analogGyro1;
 	}
 
+	public void resetCounters() {
+		getLeftEncoder().reset();
+    	getRightEncoder().reset();
+    	getAnalogGyro1().reset();
+	}
 	public double deadbanded(double val, double deadband) {
 		if (Math.abs(val) > Math.abs(deadband)) {
 			return val;

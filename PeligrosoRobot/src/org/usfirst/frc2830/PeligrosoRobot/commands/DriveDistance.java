@@ -46,25 +46,20 @@ public class DriveDistance extends Command {
    
     // Called just before this Command runs the first time
     protected void initialize() {
-    	resetCounters();
+    	Robot.drivetrain.resetCounters();
     }
 
-	private void resetCounters() {
-		Robot.drivetrain.getLeftEncoder().reset();
-    	Robot.drivetrain.getRightEncoder().reset();
-    	Robot.drivetrain.getAnalogGyro1().reset();
-	}
+	
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(isFirstRun){
-    		resetCounters();
+    		Robot.drivetrain.resetCounters();
     		isFirstRun = false;
     	}
     	SmartDashboard.putString("Running Command", "DriveDistance");
-       	SmartDashboard.putNumber("Left Encoder",Robot.drivetrain.getLeftEncoder().getDistance());
-       	SmartDashboard.putNumber("Right Encoder",Robot.drivetrain.getRightEncoder().getDistance());
-       	SmartDashboard.putNumber("Gyro",Robot.drivetrain.getAnalogGyro1().getAngle());
+    	Robot.drivetrain.writeToSmartDashboard();
+    	Robot.oi.writeToSmartDashboard();
     	
     	/*if(Robot.drivetrain.getAnalogGyro1().getAngle()>1.00){
     		Robot.drivetrain.driveForward(m_speed,.3);
@@ -104,7 +99,7 @@ public class DriveDistance extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	if(m_distance <= Robot.drivetrain.getLeftEncoder().getDistance() || m_distance <= Robot.drivetrain.getRightEncoder().getDistance()){
-    		resetCounters();
+    		Robot.drivetrain.resetCounters();
     		return true;
     	}
     	return false;
